@@ -3,7 +3,8 @@ import traceback
 # Database
 #from src.database.db_mysql import get_connection
 # Logger
-import tensorflow as tf
+from keras.models import Sequential, Model
+from keras import layers
 import numpy as np
 import pandas as pd
 from sklearn.metrics import mean_squared_error, mean_absolute_error
@@ -69,50 +70,50 @@ class MaizModel():
     def load_keras_model(type):
         # Define el modelo secuencial con la capa de entrada adecuada
         if (type =="dnn"):
-            model = tf.keras.models.Sequential()
-            model.add(tf.keras.layers.Dense(units=1024, activation='relu', input_shape=(5,)))
-            model.add(tf.keras.layers.Dense(units=512, activation='relu'))
-            model.add(tf.keras.layers.Dense(units=256, activation='relu'))
-            model.add(tf.keras.layers.Dense(units=128, activation='relu'))
-            model.add(tf.keras.layers.Dense(units=64, activation='relu'))
-            model.add(tf.keras.layers.Dense(units=32, activation='relu'))
-            model.add(tf.keras.layers.Dense(units=1, activation='linear'))
+            model = Sequential()
+            model.add(layers.Dense(units=1024, activation='relu', input_shape=(5,)))
+            model.add(layers.Dense(units=512, activation='relu'))
+            model.add(layers.Dense(units=256, activation='relu'))
+            model.add(layers.Dense(units=128, activation='relu'))
+            model.add(layers.Dense(units=64, activation='relu'))
+            model.add(layers.Dense(units=32, activation='relu'))
+            model.add(layers.Dense(units=1, activation='linear'))
             model.compile(loss='mean_squared_error', optimizer='Adamax')
             # Carga los pesos del modelo
             model.load_weights('D:/Archivos_Brayan/Universidad/Bases_de_datos_Tesis/Tratamiento_de_datos_PY/proyecto_maizpredict/src/static/modelo_DNN_Conf3_v28_95.0.h5')
         elif (type == "cnn"):
-            model = tf.keras.Sequential([
-                tf.keras.layers.Reshape((5, 1), input_shape=(5,)),
-                tf.keras.layers.Conv1D(64, 2, activation='relu'),
-                tf.keras.layers.Conv1D(128,2, activation='relu'),
-                tf.keras.layers.Conv1D(256, 2, activation='relu'),
-                tf.keras.layers.Conv1D(512, 2, activation='relu'),
-                tf.keras.layers.Flatten(),
-                tf.keras.layers.Dense(1)
+            model = Sequential([
+                layers.Reshape((5, 1), input_shape=(5,)),
+                layers.Conv1D(64, 2, activation='relu'),
+                layers.Conv1D(128,2, activation='relu'),
+                layers.Conv1D(256, 2, activation='relu'),
+                layers.Conv1D(512, 2, activation='relu'),
+                layers.Flatten(),
+                layers.Dense(1)
             ])
             model.compile(optimizer='Adam', loss='mean_squared_error')
             model.load_weights('D:/Archivos_Brayan/Universidad/Bases_de_datos_Tesis/Tratamiento_de_datos_PY/proyecto_maizpredict/src/static/modelo_CNN_Conf8_v3_87.0.h5')
         else:
-            model_cnn= tf.keras.Sequential([
-                tf.keras.layers.Reshape((5, 1), input_shape=(5,)),
-                tf.keras.layers.Conv1D(16, 2, activation='relu'),
-                tf.keras.layers.Conv1D(32, 2, activation='relu'),
-                tf.keras.layers.Conv1D(64, 2, activation='relu'),
-                tf.keras.layers.Conv1D(128, 2, activation='relu'),
-                tf.keras.layers.Flatten()
+            model_cnn= Sequential([
+                layers.Reshape((5, 1), input_shape=(5,)),
+                layers.Conv1D(16, 2, activation='relu'),
+                layers.Conv1D(32, 2, activation='relu'),
+                layers.Conv1D(64, 2, activation='relu'),
+                layers.Conv1D(128, 2, activation='relu'),
+                layers.Flatten()
             ])
-            model_dnn = tf.keras.Sequential([
-                tf.keras.layers.Dense(128, activation='relu'),
-                tf.keras.layers.Dense(64, activation='relu'),
-                tf.keras.layers.Dense(32, activation='relu'),
-                tf.keras.layers.Dense(16, activation='relu'),
-                tf.keras.layers.Dense(1)
+            model_dnn = Sequential([
+                layers.Dense(128, activation='relu'),
+                layers.Dense(64, activation='relu'),
+                layers.Dense(32, activation='relu'),
+                layers.Dense(16, activation='relu'),
+                layers.Dense(1)
             ])
             
-            combined_input = tf.keras.layers.Input(shape=(5,1))
+            combined_input = layers.Input(shape=(5,1))
             cnn_output = model_cnn(combined_input)
             dnn_output = model_dnn(cnn_output)
-            model = tf.keras.models.Model(inputs=combined_input, outputs=dnn_output)
+            model = Model(inputs=combined_input, outputs=dnn_output)
             model.compile(loss='mean_squared_error', optimizer='Adamax')
             model.load_weights('D:/Archivos_Brayan/Universidad/Bases_de_datos_Tesis/Tratamiento_de_datos_PY/proyecto_maizpredict/src/static/modelo_CNN_DNN_ConfA2_v5_87.0.h5')
             
