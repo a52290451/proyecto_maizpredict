@@ -23,7 +23,6 @@ class MaizModel():
             input_array = np.array([input_data['TMin'], input_data['TMax'], input_data['P'], input_data['PV'], input_data['BSHG']])
             input_normal = cls.normalizacion(input_array)
             final = np.array([[input_normal[0], input_normal[1], input_normal[2], input_normal[3],input_normal[4]]])
-            print(".......Normalización.......: ",final)
             resultado_prediccion = model.predict(final)
             return cls.desnormalizacion(resultado_prediccion)
         except Exception as ex:
@@ -32,30 +31,25 @@ class MaizModel():
     
     @staticmethod
     def normalizacion(variables):
-        print("Variablesss : ", variables)
-        data = pd.read_csv('D:/Archivos_Brayan/Universidad/Bases_de_datos_Tesis/Tratamiento_de_datos_PY/proyecto_maizpredict/src/static/dataset5Mean.csv')
+        data = pd.read_csv('src/static/dataset5Mean.csv')
         data = data.drop(columns=['RENDIMIENTO'])
         # Calcular máximos y mínimos para todas las columnas excepto 'BSHG'
         max_values = data.max()
         min_values = data.min()
-        print("MAX VALUES: ", max_values)
-        print("MIN VALUES: ", min_values)
         # Normalizar cada variable en el arreglo, excepto 'BSHG'
         normalized_variables = []
         cont=0
         for variable in variables:
-            print("Variable : ", variable)
-            max_val = max_values[cont]
-            min_val = min_values[cont]
+            max_val = max_values.iloc[cont]
+            min_val = min_values.iloc[cont]
             normalized_variable = (variable - min_val) / (max_val - min_val)
             normalized_variables.append(normalized_variable)
             cont+=1
-        print("Variables",normalized_variables)
         return normalized_variables
     
     @staticmethod
     def desnormalizacion(resultado):
-        data = pd.read_csv('D:/Archivos_Brayan/Universidad/Bases_de_datos_Tesis/Tratamiento_de_datos_PY/proyecto_maizpredict/src/static/dataset5Mean.csv')
+        data = pd.read_csv('src/static/dataset5Mean.csv')
         # Extrae la columna "RENDIMIENTO"
         rendimiento_column = data['RENDIMIENTO']
         # Encuentra el valor máximo y mínimo
@@ -79,7 +73,7 @@ class MaizModel():
             model.add(tf.keras.layers.Dense(units=1, activation='linear'))
             model.compile(loss='mean_squared_error', optimizer='Adamax')
             # Carga los pesos del modelo
-            model.load_weights('D:/Archivos_Brayan/Universidad/Bases_de_datos_Tesis/Tratamiento_de_datos_PY/proyecto_maizpredict/src/static/modelo_DNN_Conf3_v28_95.0.h5')
+            model.load_weights('src/static/modelo_DNN_Conf3_v28_95.0.h5')
         elif (type == "cnn"):
             model = tf.keras.Sequential([
                 tf.keras.layers.Reshape((5, 1), input_shape=(5,)),
@@ -91,7 +85,7 @@ class MaizModel():
                 tf.keras.layers.Dense(1)
             ])
             model.compile(optimizer='Adam', loss='mean_squared_error')
-            model.load_weights('D:/Archivos_Brayan/Universidad/Bases_de_datos_Tesis/Tratamiento_de_datos_PY/proyecto_maizpredict/src/static/modelo_CNN_Conf8_v3_87.0.h5')
+            model.load_weights('src/static/modelo_CNN_Conf8_v3_87.0.h5')
         else:
             model_cnn= tf.keras.Sequential([
                 tf.keras.layers.Reshape((5, 1), input_shape=(5,)),
@@ -114,7 +108,7 @@ class MaizModel():
             dnn_output = model_dnn(cnn_output)
             model = tf.keras.models.Model(inputs=combined_input, outputs=dnn_output)
             model.compile(loss='mean_squared_error', optimizer='Adamax')
-            model.load_weights('D:/Archivos_Brayan/Universidad/Bases_de_datos_Tesis/Tratamiento_de_datos_PY/proyecto_maizpredict/src/static/modelo_CNN_DNN_ConfA2_v5_87.0.h5')
+            model.load_weights('src/static/modelo_CNN_DNN_ConfA2_v5_87.0.h5')
             
         return model
     
@@ -122,8 +116,8 @@ class MaizModel():
     def reales_vs_predichos(cls):
         try:
             # Cargar los conjuntos de datos desde archivos CSV
-            y_test = pd.read_csv('D:/Archivos_Brayan/Universidad/Bases_de_datos_Tesis/Tratamiento_de_datos_PY/proyecto_maizpredict/src/static/modelo_DNN_Conf3_v28_y_test.csv')
-            y_pred = pd.read_csv('D:/Archivos_Brayan/Universidad/Bases_de_datos_Tesis/Tratamiento_de_datos_PY/proyecto_maizpredict/src/static/modelo_DNN_Conf3_v28_y_pred.csv')
+            y_test = pd.read_csv('src/static/modelo_DNN_Conf3_v28_y_test.csv')
+            y_pred = pd.read_csv('src/static/modelo_DNN_Conf3_v28_y_pred.csv')
 
             # Seleccionar los primeros 150 valores
             y_test = y_test.iloc[:150]

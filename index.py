@@ -1,3 +1,6 @@
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # Configura el nivel de registro de TensorFlow a '2' (oculta mensajes de información y advertencias)
+
 from config import config
 from src import init_app
 

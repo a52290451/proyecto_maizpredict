@@ -53,18 +53,18 @@ def get_comparacion():
 def get_metricas():
     try:
         # Obtener las métricas utilizando el método definido en la clase MaizModel
-        metrics_DNN = MaizModel.metricas('D:/Archivos_Brayan/Universidad/Bases_de_datos_Tesis/Tratamiento_de_datos_PY/proyecto_maizpredict/src/static/modelo_DNN_Conf3_v28_y_test.csv',
-                                     'D:/Archivos_Brayan/Universidad/Bases_de_datos_Tesis/Tratamiento_de_datos_PY/proyecto_maizpredict/src/static/modelo_DNN_Conf3_v28_y_pred.csv',
-                                     'D:/Archivos_Brayan/Universidad/Bases_de_datos_Tesis/Tratamiento_de_datos_PY/proyecto_maizpredict/src/static/modelo_DNN_Conf3_v28_y_train.csv',
-                                     'D:/Archivos_Brayan/Universidad/Bases_de_datos_Tesis/Tratamiento_de_datos_PY/proyecto_maizpredict/src/static/modelo_DNN_Conf3_v28_y_pred2.csv')
-        metrics_CNN = MaizModel.metricas('D:/Archivos_Brayan/Universidad/Bases_de_datos_Tesis/Tratamiento_de_datos_PY/proyecto_maizpredict/src/static/modelo_CNN_Conf8_v3_y_test.csv',
-                                     'D:/Archivos_Brayan/Universidad/Bases_de_datos_Tesis/Tratamiento_de_datos_PY/proyecto_maizpredict/src/static/modelo_CNN_Conf8_v3_y_pred.csv',
-                                     'D:/Archivos_Brayan/Universidad/Bases_de_datos_Tesis/Tratamiento_de_datos_PY/proyecto_maizpredict/src/static/modelo_CNN_Conf8_v3_y_train.csv',
-                                     'D:/Archivos_Brayan/Universidad/Bases_de_datos_Tesis/Tratamiento_de_datos_PY/proyecto_maizpredict/src/static/modelo_CNN_Conf8_v3_y_pred2.csv')
-        metrics_CNN_DNN = MaizModel.metricas('D:/Archivos_Brayan/Universidad/Bases_de_datos_Tesis/Tratamiento_de_datos_PY/proyecto_maizpredict/src/static/modelo_CNN_DNN_ConfA2_v5_y_test.csv',
-                                     'D:/Archivos_Brayan/Universidad/Bases_de_datos_Tesis/Tratamiento_de_datos_PY/proyecto_maizpredict/src/static/modelo_CNN_DNN_ConfA2_v5_y_pred.csv',
-                                     'D:/Archivos_Brayan/Universidad/Bases_de_datos_Tesis/Tratamiento_de_datos_PY/proyecto_maizpredict/src/static/modelo_CNN_DNN_ConfA2_v5_y_train.csv',
-                                     'D:/Archivos_Brayan/Universidad/Bases_de_datos_Tesis/Tratamiento_de_datos_PY/proyecto_maizpredict/src/static/modelo_CNN_DNN_ConfA2_v5_y_pred2.csv')
+        metrics_DNN = MaizModel.metricas('src/static/modelo_DNN_Conf3_v28_y_test.csv',
+                                     'src/static/modelo_DNN_Conf3_v28_y_pred.csv',
+                                     'src/static/modelo_DNN_Conf3_v28_y_train.csv',
+                                     'src/static/modelo_DNN_Conf3_v28_y_pred2.csv')
+        metrics_CNN = MaizModel.metricas('src/static/modelo_CNN_Conf8_v3_y_test.csv',
+                                     'src/static/modelo_CNN_Conf8_v3_y_pred.csv',
+                                     'src/static/modelo_CNN_Conf8_v3_y_train.csv',
+                                     'src/static/modelo_CNN_Conf8_v3_y_pred2.csv')
+        metrics_CNN_DNN = MaizModel.metricas('src/static/modelo_CNN_DNN_ConfA2_v5_y_test.csv',
+                                     'src/static/modelo_CNN_DNN_ConfA2_v5_y_pred.csv',
+                                     'src/static/modelo_CNN_DNN_ConfA2_v5_y_train.csv',
+                                     'src/static/modelo_CNN_DNN_ConfA2_v5_y_pred2.csv')
         if metrics_DNN and metrics_CNN and metrics_CNN_DNN:
             # Devolver las métricas como JSON
             merged_metrics = {
