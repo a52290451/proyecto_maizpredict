@@ -20,6 +20,9 @@ def get_prediccion():
         print("LLEGAAAAAAAAAAAAAAAAAAAAA")
         input_data = request.json
         # Verificar si se proporcionaron datos de entrada
+        print(input_data)
+        
+        print("..................................")
         if input_data:
             # Llamar al método get_model con los datos de entrada y obtener el resultado de la predicción
             resultado_prediccion = MaizModel.get_model(input_data)
