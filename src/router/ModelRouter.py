@@ -26,6 +26,8 @@ def get_prediccion():
         if input_data:
             # Llamar al método get_model con los datos de entrada y obtener el resultado de la predicción
             resultado_prediccion = MaizModel.get_model(input_data)
+            print(resultado_prediccion)
+            print("..................................")
             return jsonify({'prediction': float("{:.3f}".format(resultado_prediccion)), 'message': "SUCCESS", 'success': True}), 200
         else:
             return jsonify({'message': "NO_INPUT_DATA_PROVIDED", 'success': False}), 400
