@@ -17,6 +17,7 @@ def get_prediccion():
     # Obtener datos de entrada de la solicitud (asumiendo que los valores de entrada se envían como JSON)
     
     try:
+        print("LLEGAAAAAAAAAAAAAAAAAAAAA")
         input_data = request.json
         # Verificar si se proporcionaron datos de entrada
         if input_data:

@@ -15,6 +15,6 @@ def init_app(config):
     app.register_blueprint(ModelRouter.main, url_prefix='/model')
 
     # Configuración de CORS
-    CORS(app, resources={r"/model/*": {"origins": "*"}})
+    CORS(app, resources={r"*": {"origins": "*"}})
     
     return app
