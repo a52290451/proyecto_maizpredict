@@ -55,7 +55,7 @@ set FLASK_APP=index.py
 
 **macOS/Linux:**
 ```bash
-export FLASK_APP=main.py
+export FLASK_APP=index.py
 ```
 
 Para habilitar el modo de desarrollo (opcional):
@@ -74,4 +74,9 @@ export FLASK_ENV=development
 Inicia el servidor Flask con el siguiente comando:
 ```bash
 flask run
+```
+### OPCIONAL
+Si la configuración de variables para Flask no funciona, ejecuta el siguiente comando:
+```bash
+flask --app index.py run
 ```
