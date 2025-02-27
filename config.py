@@ -1,7 +1,8 @@
 from decouple import config
 
 class Config():
-    SECRET_KEY = config('SECRET_KEY')
+    FLASK_APP = config('FLASK_APP')
+    FLASK_ENV = config('FLASK_ENV')
 
 
 class DevelopmentConfig(Config):
